@@ -1,0 +1,31 @@
+Some project for reference.
+
+https://github.com/programadorthi/compose-weather-forecast
+
+Create a single-screen weather forecast app. You have until March 23rd, 23:59 PST to submit your entry.1
+
+Your UI must be fully built in Compose. You can use fake weather data.
+
+We will judge your submission on these four categories:
+* Visual beauty
+* Novelty of idea
+* Code quality
+* Overall execution (including accessibility)
+
+Different weather on planets colonies --
+
+Create a single-screen weather forecast app. You have until March 22rd to submit your entry.
+
+To help implement a beautiful design, check out the Compose documentation on
+layouts,
+theming,
+graphics. T
+hink of novel uses of animations and gestures.
+Improve your code quality with architecture and testing.
+And for overall execution, make sure to read about accessibility.
+
+Your solution must be implemented in a public GitHub repository.
+Make a copy of this Github repository template and follow the instructions in the README.
+The template contains a basic Hello World! in Compose and a continuous integration setup.
+
+The App Submission must, at a minimum, support English language use / And Klingon.
