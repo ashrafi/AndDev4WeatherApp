@@ -17,44 +17,136 @@ package com.example.androiddevchallenge
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.BottomNavigation
+import androidx.compose.material.BottomNavigationItem
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Icon
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.KEY_ROUTE
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.navigate
+import androidx.navigation.compose.rememberNavController
+import com.example.androiddevchallenge.ui.theme.EmojiTheme
+import com.example.androiddevchallenge.ui.theme.KlingonTheme
+import com.example.androiddevchallenge.ui.theme.MartianTheme
 import com.example.androiddevchallenge.ui.theme.MyTheme
+import compose.icons.FontAwesomeIcons
+import compose.icons.fontawesomeicons.Solid
+import compose.icons.fontawesomeicons.solid.Grin
+import compose.icons.fontawesomeicons.solid.Skull
+import compose.icons.fontawesomeicons.solid.UserAstronaut
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MyTheme {
-                MyApp()
-            }
+            MyApp()
         }
     }
 }
 
+sealed class Screen(val route: String, @StringRes val resourceId: Int, val icon: ImageVector) {
+    object Mars : Screen("mars", R.string.mars, FontAwesomeIcons.Solid.UserAstronaut)
+    object Emoji : Screen("emoji", R.string.emoji, FontAwesomeIcons.Solid.Grin)
+    object Klingon : Screen("klingon", R.string.klingon, FontAwesomeIcons.Solid.Skull)
+}
+
 // Start building your app here!
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MyApp() {
-    Surface(color = MaterialTheme.colors.background) {
-        // val locale = Locale("kg")
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(
-                text = "Ready... Set... GO!",
-                modifier = Modifier.padding(16.dp)
-            )
+    val ctx = LocalContext.current
+    val items = listOf(
+        Screen.Mars,
+        Screen.Emoji,
+        Screen.Klingon,
+    )
 
-            Text(
-                text = "⛈️ ➕ 💨",
-                modifier = Modifier.padding(16.dp)
-            )
+    // AppCompatDelegate.setDefaultNightMode()
+
+    val navController = rememberNavController()
+    Scaffold(
+        bottomBar = {
+            BottomNavigation {
+                val navBackStackEntry by navController.currentBackStackEntryAsState()
+                val currentRoute = navBackStackEntry?.arguments?.getString(KEY_ROUTE)
+                items.forEach { screen ->
+                    BottomNavigationItem(
+                        icon = {
+                            Icon(
+                                screen.icon, "icon",
+                                modifier = Modifier.size(27.dp)
+                            )
+                        },
+                        label = { Text(stringResource(screen.resourceId)) },
+                        selected = currentRoute == screen.route,
+                        onClick = {
+                            navController.navigate(screen.route) {
+                                // Pop up to the start destination of the graph to
+                                // avoid building up a large stack of destinations
+                                // on the back stack as users select items
+                                popUpTo = navController.graph.startDestination
+                                // Avoid multiple copies of the same destination when
+                                // reselecting the same item
+                                launchSingleTop = true
+                            }
+                        },
+
+                    )
+                }
+            }
+        }
+    ) {
+
+        NavHost(navController, startDestination = Screen.Mars.route) {
+            composable(Screen.Mars.route) {
+                val colors_mars = listOf(
+                    Color.DarkGray,
+                    Color.Gray,
+                    Color.Black
+                )
+                MartianTheme() {
+                    MainFace(ctx, R.drawable.ic_mars, colors_mars)
+                }
+            }
+            composable(Screen.Emoji.route) {
+                val colors_emoji = listOf(
+                    Color(0xFFffd7d7.toInt()),
+                    Color(0xFFffe9d6.toInt()),
+                    Color(0xFFfffbd0.toInt()),
+                    Color(0xFFe3ffd9.toInt()),
+                    Color(0xFFd0fff8.toInt())
+                )
+
+                EmojiTheme() {
+                    MainFace(ctx, R.drawable.ic_kawaii_earth, colors_emoji)
+                }
+            }
+            composable(Screen.Klingon.route) {
+                val colors_klingon = listOf(
+                    Color.DarkGray,
+                    Color.Gray,
+                    Color.Black
+                )
+                KlingonTheme() { // we can also do VulcanTheme() {
+                    MainFace(ctx, R.drawable.klingon_planet, colors_klingon)
+                }
+            }
         }
     }
 }
@@ -75,4 +167,4 @@ fun DarkPreview() {
     }
 }
 
-private const val TAG = "weather"
+const val TAG = "weather"

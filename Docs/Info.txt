@@ -19,8 +19,9 @@ Create a single-screen weather forecast app. You have until March 22rd to submit
 To help implement a beautiful design, check out the Compose documentation on
 layouts,
 theming,
-graphics. T
-hink of novel uses of animations and gestures.
+graphics.
+
+-> Think of novel uses of animations and gestures. <-
 Improve your code quality with architecture and testing.
 And for overall execution, make sure to read about accessibility.
 
@@ -29,3 +30,7 @@ Make a copy of this Github repository template and follow the instructions in th
 The template contains a basic Hello World! in Compose and a continuous integration setup.
 
 The App Submission must, at a minimum, support English language use / And Klingon.
+
+Change -- langage --
+* https://github.com/B3nedikt/restring
+* https://medium.com/swlh/android-app-specific-language-change-programmatically-using-kotlin-d650a5392220

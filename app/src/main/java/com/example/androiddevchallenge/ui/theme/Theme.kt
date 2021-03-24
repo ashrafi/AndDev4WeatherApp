@@ -20,6 +20,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 
 private val DarkColorPalette = darkColors(
     primary = purple200,
@@ -27,20 +28,97 @@ private val DarkColorPalette = darkColors(
     secondary = teal200
 )
 
+private val DarkMarsColorPalette = darkColors(
+    primary = Color.Red,
+    primaryVariant = Color.White,
+    secondary = Color.Magenta
+)
+
 private val LightColorPalette = lightColors(
     primary = purple500,
     primaryVariant = purple700,
     secondary = teal200
-
-        /* Other default colors to override
-    background = Color.White,
-    surface = Color.White,
-    onPrimary = Color.White,
-    onSecondary = Color.Black,
-    onBackground = Color.Black,
-    onSurface = Color.Black,
-    */
 )
+
+@Composable
+fun MartianTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable() () -> Unit) {
+    val colors = if (darkTheme) {
+        DarkMarsColorPalette // DarkColorPalette
+    } else {
+        DarkMarsColorPalette // LightColorPalette
+    }
+
+    MaterialTheme(
+        colors = colors,
+        typography = martianTypography,
+        shapes = shapes,
+        content = content
+    )
+}
+
+@Composable
+fun KlingonTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable() () -> Unit) {
+    val colors = if (darkTheme) {
+        DarkColorPalette
+    } else {
+        DarkColorPalette
+    }
+    MaterialTheme(
+        colors = colors,
+        typography = klingonTypography,
+        shapes = shapes,
+        content = content
+    )
+}
+
+@Composable
+fun VolcanTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable() () -> Unit) {
+    val colors = if (darkTheme) {
+        DarkColorPalette
+    } else {
+        LightColorPalette
+    }
+
+    MaterialTheme(
+        colors = colors,
+        typography = volcanTypography,
+        shapes = shapes,
+        content = content
+    )
+}
+
+@Composable
+fun EmojiTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable() () -> Unit) {
+    val colors = if (darkTheme) {
+        DarkColorPalette
+    } else {
+        LightColorPalette
+    }
+
+    MaterialTheme(
+        colors = colors,
+        typography = emojiTypography,
+        shapes = shapes,
+        content = content
+    )
+}
+
+// Vulcan
+@Composable
+fun SyneTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable() () -> Unit) {
+    val colors = if (darkTheme) {
+        DarkColorPalette
+    } else {
+        LightColorPalette
+    }
+
+    MaterialTheme(
+        colors = colors,
+        typography = syneTypography,
+        shapes = shapes,
+        content = content
+    )
+}
 
 @Composable
 fun MyTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable() () -> Unit) {
